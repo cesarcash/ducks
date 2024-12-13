@@ -1,14 +1,27 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import Ducks from "./Ducks";
 import Login from "./Login";
 import MyProfile from "./MyProfile";
 import Register from "./Register";
 import ProtectedRouter from './ProtectedRoute';
+import { setToken, getToken } from '../utils/token';
 import * as auth from  '../utils/auth';
 import "./styles/App.css";
 
 function App() {
+
+  useEffect(() => {
+    
+    const jwt = getToken();
+    
+    if(!jwt) return;
+    
+    console.log("🚀 ~ useEffect ~ jwt:", jwt)
+    
+
+  },[])
+
   const [userData, setUserData] = useState({username: '', password: ''});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -27,7 +40,6 @@ function App() {
 
   const handleLogin = ({username, password}) => {
 
-
     if(!username || !password){
       return;
     }
@@ -36,6 +48,7 @@ function App() {
     .then((data) => {
       
       if(data.jwt){
+        setToken(data.jwt);
         setUserData(data.user);
         setIsLoggedIn(true);
         navigate('./ducks');

@@ -11,6 +11,7 @@ const Login = ({handleLogin}) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    
     setData((prevData) => ({
       ...prevData,
       [name]: value,
