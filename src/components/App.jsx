@@ -6,21 +6,11 @@ import MyProfile from "./MyProfile";
 import Register from "./Register";
 import ProtectedRouter from './ProtectedRoute';
 import { setToken, getToken } from '../utils/token';
+import * as api from '../utils/api';
 import * as auth from  '../utils/auth';
 import "./styles/App.css";
 
 function App() {
-
-  useEffect(() => {
-    
-    const jwt = getToken();
-    
-    if(!jwt) return;
-    
-    console.log("🚀 ~ useEffect ~ jwt:", jwt)
-    
-
-  },[])
 
   const [userData, setUserData] = useState({username: '', password: ''});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -56,7 +46,23 @@ function App() {
 
     })
     .catch(console.error)
-  }
+  };
+
+  useEffect(() => {
+    
+    const jwt = getToken();
+    
+    if(!jwt) return;
+    
+    api.getUserInfo(jwt)
+    .then(({username,email}) => {
+      setIsLoggedIn(true);
+      setUserData({username,email});
+      navigate('/ducks');
+    })
+    .catch(console.error)
+
+  }, [])
 
   return (
     <Routes>
