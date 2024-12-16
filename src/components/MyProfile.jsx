@@ -5,13 +5,12 @@ function MyProfile({
   userData = {
     username: "Nombre de usuario aquí",
     email: "Correo electrónico aquí",
-  },
-  setIsLoggedIn
+  }
 }) {
   const { username, email } = userData;
   return (
     <>
-      <NavBar setIsLoggedIn={setIsLoggedIn} />
+      <NavBar />
       <div className="my-profile">
         <div className="my-profile__container">
           <div className="my-profile__header">
