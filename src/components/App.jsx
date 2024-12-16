@@ -42,7 +42,7 @@ function App() {
       if(data.jwt){
         setToken(data.jwt);
         setUserData(data.user);
-        setIsLoggedIn(true);
+        setIsLoggedIn(true);        
 
         const redirectPath = location.state?.from?.pathname || "/ducks";
         navigate(redirectPath);
